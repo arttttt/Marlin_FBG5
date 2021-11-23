@@ -1833,7 +1833,7 @@ bool Planner::_populate_block(block_t * const block, bool split_move,
     if (da < 0) SBI(dm, X_HEAD);                // Save the real Extruder (head) direction in X Axis
     if (db < 0) SBI(dm, Y_HEAD);                // ...and Y
     if (dc < 0) SBI(dm, Z_AXIS);
-    if (da + db < 0) SBI(dm, A_AXIS);           // Motor A direction
+    if (da - db < 0) SBI(dm, A_AXIS);           // Motor A direction
     if (db < 0) SBI(dm, B_AXIS);                // Motor B direction
   #else
     if (da < 0) SBI(dm, X_AXIS);
@@ -1871,7 +1871,7 @@ bool Planner::_populate_block(block_t * const block, bool split_move,
   #elif CORE_IS_YZ
     block->steps.set(ABS(da), ABS(db + dc), ABS(db - dc));
   #elif ENABLED(MARKFORGED_XY)
-    block->steps.set(ABS(da + db), ABS(db), ABS(dc));
+    block->steps.set(ABS(da - db), ABS(db), ABS(dc));
   #elif IS_SCARA
     block->steps.set(ABS(da), ABS(db), ABS(dc));
   #else
